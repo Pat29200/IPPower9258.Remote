@@ -12,11 +12,7 @@ Android application for remote control of the Aviosys IP Power 9258.
 
 ## Download
 
-The latest Android APK is available in the **Releases** section of this repository.
-
-Download the file:
-
-`IPPower9258.Remote-v0.3.1.apk`
+The latest Android APK is available in the [**Releases**](https://github.com/Pat29200/IPPower9258.Remote/releases/latest) section of this repository.
 
 ## Installation on Android
 
