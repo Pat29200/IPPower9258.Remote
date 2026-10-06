@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="IPPower9258.Remote.SettingsPage"
+    Title="Paramètres">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="18">
+
+            <Label
+                Text="Paramètres IP Power 9258"
+                FontSize="26"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <!-- CONNEXION TELNET -->
+
+            <Label
+                Text="Connexion Telnet"
+                FontSize="18"
+                FontAttributes="Bold"
+                Margin="0,8,0,0" />
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Adresse IP" />
+                <Entry
+                    x:Name="HostEntry"
+                    Placeholder="192.168.0.18"
+                    Keyboard="Url" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Port Telnet" />
+                <Entry
+                    x:Name="PortEntry"
+                    Text="23"
+                    Keyboard="Numeric"
+                    MaxLength="5" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Nom d'utilisateur" />
+                <Entry
+                    x:Name="UsernameEntry"
+                    Placeholder="Nom d'utilisateur" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Mot de passe" />
+                <Entry
+                    x:Name="PasswordEntry"
+                    Placeholder="Mot de passe"
+                    IsPassword="True" />
+            </VerticalStackLayout>
+
+            <!-- NOMS DES PRISES -->
+
+            <Label
+                Text="Noms des prises"
+                FontSize="18"
+                FontAttributes="Bold"
+                Margin="0,12,0,0" />
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Prise 1" />
+                <Entry
+                    x:Name="Outlet1NameEntry"
+                    Text="Caméra"
+                    MaxLength="40" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Prise 2" />
+                <Entry
+                    x:Name="Outlet2NameEntry"
+                    Text="PC télescope"
+                    MaxLength="40" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Prise 3" />
+                <Entry
+                    x:Name="Outlet3NameEntry"
+                    Text="Monture et Focuser"
+                    MaxLength="40" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Prise 4" />
+                <Entry
+                    x:Name="Outlet4NameEntry"
+                    Text="Résistance chauffante"
+                    MaxLength="40" />
+            </VerticalStackLayout>
+
+            <Button
+                x:Name="SaveButton"
+                Text="Enregistrer"
+                Margin="0,10,0,0"
+                IsEnabled="False" />
+
+            <Label
+                x:Name="SettingsStatusLabel"
+                Text="Paramètres non enregistrés"
+                HorizontalOptions="Center"
+                FontAttributes="Italic"
+                Opacity="0.7" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="IPPower9258.Remote.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

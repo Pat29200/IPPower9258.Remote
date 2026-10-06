@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="IPPower9258.Remote.MainPage"
+    Title="IP Power 9258">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="16">
+
+            <Label
+                Text="IP Power 9258"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Commande à distance"
+                FontSize="16"
+                HorizontalOptions="Center"
+                Opacity="0.7" />
+
+            <!-- DÉMARRAGE OBSERVATOIRE -->
+            <Border
+                Padding="16"
+                StrokeShape="RoundRectangle 12">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="Démarrage observatoire"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="Caméra → attente 30 s → PC télescope"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        Opacity="0.7" />
+
+                    <Button
+                        x:Name="StartupButton"
+                        Text="Démarrer l'observatoire"
+                        FontAttributes="Bold"
+                        IsEnabled="False" />
+
+                    <Button
+                        x:Name="CancelStartupButton"
+                        Text="Annuler le démarrage"
+                        IsVisible="False"
+                        IsEnabled="False" />
+
+                    <Label
+                        x:Name="StartupStatusLabel"
+                        Text=""
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        FontAttributes="Italic"
+                        IsVisible="False" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- PRISE 1 -->
+            <Border
+                Padding="16"
+                StrokeShape="RoundRectangle 12">
+
+                <Grid
+                    ColumnDefinitions="*,90"
+                    ColumnSpacing="15">
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Prise 1"
+                            FontSize="13"
+                            Opacity="0.6" />
+
+                        <Label
+                            x:Name="OutletNameLabel1"
+                            Text="Caméra"
+                            FontSize="20"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <Button
+                        x:Name="StateButton1"
+                        Grid.Column="1"
+                        Text="OFF"
+                        TextColor="White"
+                        BackgroundColor="#555555"
+                        FontAttributes="Bold"
+                        CornerRadius="18"
+                        Padding="10,6"
+                        VerticalOptions="Center"
+                        IsEnabled="False" />
+                </Grid>
+            </Border>
+
+            <!-- PRISE 2 -->
+            <Border
+                Padding="16"
+                StrokeShape="RoundRectangle 12">
+
+                <Grid
+                    ColumnDefinitions="*,90"
+                    ColumnSpacing="15">
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Prise 2"
+                            FontSize="13"
+                            Opacity="0.6" />
+
+                        <Label
+                            x:Name="OutletNameLabel2"
+                            Text="PC télescope"
+                            FontSize="20"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <Button
+                        x:Name="StateButton2"
+                        Grid.Column="1"
+                        Text="OFF"
+                        TextColor="White"
+                        BackgroundColor="#555555"
+                        FontAttributes="Bold"
+                        CornerRadius="18"
+                        Padding="10,6"
+                        VerticalOptions="Center"
+                        IsEnabled="False" />
+                </Grid>
+            </Border>
+
+            <!-- PRISE 3 -->
+            <Border
+                Padding="16"
+                StrokeShape="RoundRectangle 12">
+
+                <Grid
+                    ColumnDefinitions="*,90"
+                    ColumnSpacing="15">
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Prise 3"
+                            FontSize="13"
+                            Opacity="0.6" />
+
+                        <Label
+                            x:Name="OutletNameLabel3"
+                            Text="Monture et Focuser"
+                            FontSize="20"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <Button
+                        x:Name="StateButton3"
+                        Grid.Column="1"
+                        Text="OFF"
+                        TextColor="White"
+                        BackgroundColor="#555555"
+                        FontAttributes="Bold"
+                        CornerRadius="18"
+                        Padding="10,6"
+                        VerticalOptions="Center"
+                        IsEnabled="False" />
+                </Grid>
+            </Border>
+
+            <!-- PRISE 4 -->
+            <Border
+                Padding="16"
+                StrokeShape="RoundRectangle 12">
+
+                <Grid
+                    ColumnDefinitions="*,90"
+                    ColumnSpacing="15">
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Prise 4"
+                            FontSize="13"
+                            Opacity="0.6" />
+
+                        <Label
+                            x:Name="OutletNameLabel4"
+                            Text="Résistance chauffante"
+                            FontSize="20"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <Button
+                        x:Name="StateButton4"
+                        Grid.Column="1"
+                        Text="OFF"
+                        TextColor="White"
+                        BackgroundColor="#555555"
+                        FontAttributes="Bold"
+                        CornerRadius="18"
+                        Padding="10,6"
+                        VerticalOptions="Center"
+                        IsEnabled="False" />
+                </Grid>
+            </Border>
+
+            <Button
+                x:Name="RefreshButton"
+                Text="Actualiser l'état des prises"
+                Margin="0,8,0,0"
+                IsEnabled="False" />
+
+            <Button
+                x:Name="SettingsButton"
+                Text="Paramètres" />
+
+            <Label
+                x:Name="StatusLabel"
+                Text="Non connecté"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                FontAttributes="Italic"
+                Opacity="0.7" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
