@@ -29,6 +29,10 @@ public partial class MainPage : ContentPage
     private bool _statesKnown = false;
     private bool _operationInProgress = false;
     private bool _initialRefreshDone = false;
+    private bool _errorDisplayed = false;
+    private readonly Color _normalStatusTextColor;
+    private readonly Color _normalStatusBackgroundColor;
+    private readonly FontAttributes _normalStatusFontAttributes;
 
     private CancellationTokenSource? _startupCancellationTokenSource;
     private bool _startupInProgress = false;
@@ -36,6 +40,12 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+
+        _normalStatusTextColor = StatusLabel.TextColor;
+        _normalStatusBackgroundColor = StatusLabel.BackgroundColor;
+        _normalStatusFontAttributes = StatusLabel.FontAttributes;
+        StatusLabel.LineBreakMode = LineBreakMode.WordWrap;
+        StatusLabel.MaxLines = -1;
 
         SettingsButton.Clicked += SettingsButton_Clicked;
         RefreshButton.Clicked += RefreshButton_Clicked;
@@ -127,14 +137,15 @@ public partial class MainPage : ContentPage
         CancelStartupButton.IsEnabled =
             _startupInProgress;
 
-        if (!configurationComplete)
+        if (!configurationComplete && !_errorDisplayed)
         {
             StatusLabel.Text =
                 "Configuration incomplète";
         }
         else if (!_statesKnown &&
                  !_operationInProgress &&
-                 !_startupInProgress)
+                 !_startupInProgress &&
+                 !_errorDisplayed)
         {
             StatusLabel.Text =
                 "Prêt à lire l'état des prises";
@@ -253,18 +264,20 @@ public partial class MainPage : ContentPage
 
             _statesKnown = true;
 
+            ClearStatusError();
+
             StatusLabel.Text =
                 "État des prises actualisé";
         }
         catch (OperationCanceledException)
         {
-            StatusLabel.Text =
-                "Délai d'attente dépassé";
+            ShowStatusError(
+                "Connexion impossible à l'IP Power 9258 : délai d'attente dépassé. Vérifiez le réseau, puis appuyez sur Actualiser.");
         }
         catch (Exception ex)
         {
-            StatusLabel.Text =
-                $"Erreur : {ex.Message}";
+            ShowStatusError(
+                $"Communication impossible avec l'IP Power 9258 : {ex.Message}");
         }
         finally
         {
@@ -339,6 +352,8 @@ public partial class MainPage : ContentPage
 
             _statesKnown = true;
 
+            ClearStatusError();
+
             StatusLabel.Text = requestedState
                 ? $"Prise {outletNumber} mise sur ON et vérifiée"
                 : $"Prise {outletNumber} mise sur OFF et vérifiée";
@@ -347,15 +362,15 @@ public partial class MainPage : ContentPage
         {
             _statesKnown = false;
 
-            StatusLabel.Text =
-                "Délai d'attente dépassé";
+            ShowStatusError(
+                "Connexion impossible à l'IP Power 9258 : délai d'attente dépassé. Vérifiez le réseau, puis appuyez sur Actualiser.");
         }
         catch (Exception ex)
         {
             _statesKnown = false;
 
-            StatusLabel.Text =
-                $"Erreur : {ex.Message}";
+            ShowStatusError(
+                $"Communication impossible avec l'IP Power 9258 : {ex.Message}");
         }
         finally
         {
@@ -430,6 +445,7 @@ public partial class MainPage : ContentPage
 
             ApplyStates(currentStates);
             _statesKnown = true;
+            ClearStatusError();
 
             cameraWasInitiallyOn =
                 currentStates[0];
@@ -458,6 +474,7 @@ public partial class MainPage : ContentPage
 
                 ApplyStates(statesAfterCamera);
                 _statesKnown = true;
+                ClearStatusError();
 
                 cameraTurnedOnBySequence = true;
 
@@ -492,12 +509,23 @@ public partial class MainPage : ContentPage
 
             ApplyStates(finalStates);
             _statesKnown = true;
+            ClearStatusError();
 
             StartupStatusLabel.Text =
                 "Démarrage terminé — Caméra et PC télescope sous tension";
 
             StatusLabel.Text =
                 "Démarrage observatoire terminé";
+        }
+        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+        {
+            _statesKnown = false;
+
+            StartupStatusLabel.Text =
+                "Délai d'attente dépassé pendant le démarrage — vérifiez l'état des prises";
+
+            ShowStatusError(
+                "Connexion impossible à l'IP Power 9258 : délai d'attente dépassé. Vérifiez le réseau, puis appuyez sur Actualiser.");
         }
         catch (OperationCanceledException)
         {
@@ -519,6 +547,7 @@ public partial class MainPage : ContentPage
 
                     ApplyStates(rollbackStates);
                     _statesKnown = true;
+                    ClearStatusError();
 
                     StartupStatusLabel.Text =
                         "Démarrage annulé — caméra arrêtée";
@@ -533,8 +562,8 @@ public partial class MainPage : ContentPage
                     StartupStatusLabel.Text =
                         "Démarrage annulé, mais l'état de la caméra doit être vérifié";
 
-                    StatusLabel.Text =
-                        $"Erreur lors du retour à l'état initial : {ex.Message}";
+                    ShowStatusError(
+                        $"Erreur lors du retour à l'état initial : {ex.Message}");
                 }
             }
             else
@@ -553,8 +582,8 @@ public partial class MainPage : ContentPage
             StartupStatusLabel.Text =
                 "Erreur pendant le démarrage";
 
-            StatusLabel.Text =
-                $"Erreur : {ex.Message}";
+            ShowStatusError(
+                $"Communication impossible avec l'IP Power 9258 : {ex.Message}");
         }
         finally
         {
@@ -565,6 +594,24 @@ public partial class MainPage : ContentPage
 
             await UpdateConfigurationStateAsync();
         }
+    }
+
+    // Keep communication errors visible until a verified response is received.
+    private void ShowStatusError(string message)
+    {
+        _errorDisplayed = true;
+        StatusLabel.TextColor = Colors.White;
+        StatusLabel.BackgroundColor = Color.FromArgb("#B71C1C");
+        StatusLabel.FontAttributes = FontAttributes.Bold;
+        StatusLabel.Text = message;
+    }
+
+    private void ClearStatusError()
+    {
+        _errorDisplayed = false;
+        StatusLabel.TextColor = _normalStatusTextColor;
+        StatusLabel.BackgroundColor = _normalStatusBackgroundColor;
+        StatusLabel.FontAttributes = _normalStatusFontAttributes;
     }
 
     private void ApplyStates(
