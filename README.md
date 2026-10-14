@@ -1,4 +1,5 @@
-<img width="1080" height="2400" alt="Screenshot_2026-10-14-19-07-23-182_com companyname ippower9258 remote" src="https://github.com/user-attachments/assets/c6fb7c39-582e-424a-ab93-59676cef461d" />
+<img width="1080" height="2400" alt="Screenshot_2026-10-14-19-07-13-414_com companyname ippower9258 remote" src="https://github.com/user-attachments/assets/c26a9c5d-6867-4229-aee7-5d10f3ac3290" />
+
 # IPPower9258.Remote
 
 Android application for remote control of the Aviosys IP Power 9258.
@@ -10,7 +11,7 @@ Android application for remote control of the Aviosys IP Power 9258.
 - Configure the IP address and connection settings of the IP Power 9258.
 - Works over a local Wi-Fi network.
 - Can be used remotely through a VPN such as WireGuard.
-
+<img width="1080" height="2400" alt="Screenshot_2026-10-14-19-07-23-182_com companyname ippower9258 remote" src="https://github.com/user-attachments/assets/c6fb7c39-582e-424a-ab93-59676cef461d" />
 ## Download
 
 The latest Android APK is available in the [**Releases**](https://github.com/Pat29200/IPPower9258.Remote/releases/latest) section of this repository.
