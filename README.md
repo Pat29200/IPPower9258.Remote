@@ -32,10 +32,6 @@ If the APK was downloaded from the official GitHub Releases page of this reposit
 
 Google Play Protect may then analyze the application before completing the installation.
 
-## Current version
-
-**v0.3.1**
-
 ## Compatibility
 
 Designed for the **Aviosys IP Power 9258** network power controller.
