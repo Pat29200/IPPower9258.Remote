@@ -42,3 +42,7 @@ Designed for the **Aviosys IP Power 9258** network power controller.
 ## Author
 
 Patrice LE GUEN
+
+## Other program
+Ascom-Alpaca driver for Outlet IP9258
+https://github.com/Pat29200/ASCOM.Alpaca.IPPower9258
